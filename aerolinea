@@ -1,0 +1,145 @@
+import numpy as np
+
+
+def calculoDcto(valorTotal):
+  descuento = (valorTotal * (85/100))
+  return descuento
+
+def anularRegistro(anulacion):
+  if anulacion.lower() == "si":
+      registroCliente.clear()
+      print("cliente eliminado.")
+    
+
+asientosLista=[[1,2,3,4,5,6],
+               [7,8,9,10,11,12],
+               [13,14,15,16,17,18],
+               [19,20,21,22,23,24],
+               [25,26,27,28,29,30],
+               [31,32,33,34,35,36],
+               [37,38,39,40,41,42]]
+
+cliente = []
+valorNormal = 78900
+valorVIP = 240000
+sw = True
+registroCliente = []
+sw2 = True
+
+print("\t\tBienvenido a Vuelos Duoc\n \t\t\t")
+print("|  1 \t  2 \t  3 \t\t  4 \t  5 \t  6 |")
+print("|                                                   |")
+print("|  7 \t  8 \t  9 \t\t 10 \t 11 \t 12 |")
+print("|                                                   |")
+print("| 13 \t 14 \t 15 \t\t 16 \t 17 \t 18 |")
+print("|                                                   |")
+print("| 19 \t 20 \t 21 \t\t 22 \t 23 \t 24 |")
+print("|                                                   |")
+print("| 25 \t 26 \t 27 \t\t 28 \t 29 \t 30 |")
+print("|_________________   \t\t   _________________|")
+print("|_________________   \t\t   _________________|")
+print("|                                                   |")
+print("| 31 \t 32 \t 33 \t\t 34 \t 35 \t 36 |")
+print("|                                                   |")
+print("| 37 \t 38 \t 39 \t\t 40 \t 41 \t 42 |")
+print()
+
+
+while sw:
+  print("1.Ver asientos disponibles")
+  print("2.Comprar asiento")
+  print("3.Anular vuelo")
+  print("4.Modificar datos de pasajero")
+  print("5.Salir")
+  op = int(input("Seleccion una opion: "))
+
+  if op == 1:
+    for i in range(len(asientosLista)):
+      print(asientosLista[i])
+       
+  if op == 2:
+    print("Registro de clientes")
+    print()
+    nombrePasajero = str(input("Ingrese su nombre completo: "))
+    cliente.insert(0,nombrePasajero)
+    rutPasajero = int(input("ingrese rut: "))
+
+    if rutPasajero > 5000000 or rutPasajero < 99999999:
+      cliente.insert(1,rutPasajero)
+      telefonoPasajero = int(input("ingrese su numero de telefono "))
+
+      if telefonoPasajero > 10000000 and telefonoPasajero < 99999999:
+        cliente.insert(2, telefonoPasajero)
+
+        bancoPasajero = input("es cliente del BancoDuoc?")
+        if bancoPasajero.lower() == "si":
+          bancoDUOC = True
+
+        else:
+          bancoDUOC = False
+        asientoPasajero = int(input("escoja su asiento: "))
+        cliente.insert(3, asientoPasajero)
+        registroCliente.append(cliente)
+        
+        for fila in asientosLista:
+          for asiento in fila:
+            if asiento == asientoPasajero:
+              ind_asiento = fila.index(asiento)
+              fila[ind_asiento] = "X"
+
+        for i in asientosLista:
+          print(i)
+
+        if asientoPasajero >= 1 and asientoPasajero <= 30:
+          if bancoDUOC:
+            print("Ha reservado el asiento numero", asientoPasajero, ".\nSu valor es: $",calculoDcto(valorNormal))
+          else:
+            print("Ha reservado el asiento numero", asientoPasajero, ".\nSu valor es: $",valorNormal)
+        else:
+          if asientoPasajero >= 31 and asientoPasajero <= 42:
+            if bancoDUOC:
+              print("Ha reservado el asiento numero", asientoPasajero, ".\nSu valor es: $",calculoDcto(valorVIP))
+            else:
+              print("Ha reservado el asiento numero", asientoPasajero, ".\nSu valor es: $",valorVIP)
+      else:
+        print("ingrese un numero de telefono valido.")
+    else:
+      print("ingrese un rut valido")     
+
+
+  if op == 3:
+    print("\n\t\tAnulaion de reserva")
+    buscarPasajero = int(input("ingrese un rut para buscar: "))
+    if buscarPasajero == rutPasajero:
+     print(registroCliente)
+     anulacion = str(input("¿Desea eliminar este registro?"))
+     anularRegistro(anulacion)
+    else:
+     print("el rut ingresado no existe en el registro.")
+
+  if op ==4:
+    buscarRut = int(input("ingrese su rut: "))
+    if buscarRut == rutPasajero:
+      print("seleccione el dato que desea cambiar: ")
+      print("1- Nombre")
+      print("2- Telefono")
+      opcion = int(input())
+
+      if opcion == 1:
+        cliente.pop(0)
+        nvoNom = input("ingrese nuevo nombre: ")
+        cliente.insert(0, nvoNom)
+
+      if opcion == 2:
+        cliente.pop(2)
+        nvoRut = input("ingrese nuevo numero de telefono: ")
+        cliente.insert(2, nvoRut)
+    
+  if op == 5:
+    sw = False
+
+
+print("Muchas Gracias por usar Vuelos Duoc.")
+
+
+
